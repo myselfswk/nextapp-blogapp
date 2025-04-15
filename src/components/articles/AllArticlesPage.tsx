@@ -1,8 +1,9 @@
+"use client";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Search } from "lucide-react";
 import Image from "next/image";
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 type SearchPageProps = {
     articles: Prisma.ArticlesGetPayload<{
