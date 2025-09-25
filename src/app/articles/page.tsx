@@ -6,6 +6,7 @@ import AllArticlesPage from "@/components/articles/AllArticlesPage";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchArticleByQuery } from "@/lib/query/fetch-articles";
+import Navbar from "@/components/home/header/Navbar";
 
 type SearchPageProps = {
     searchParams: { search?: string; page?: string };
@@ -24,6 +25,7 @@ const Articles: React.FC<SearchPageProps> = async ({ searchParams }) => {
 
     return (
         <div className="min-h-screen bg-background">
+            <Navbar />
             <main className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
                 {/* Page Header */}
                 <div className="mb-12 space-y-6 text-center">

@@ -6,11 +6,13 @@ import SearchInput from "./SearchInput";
 import { ModeToggle } from "./ModeToggle";
 import { Menu, Search, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import { searchAction } from "@/actions/search";
 
 const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    // isLoaded, isSignedIn,
+    const { user } = useUser();
 
     return (
         <div className="sticky top-0 z-50 w-full border border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -47,12 +49,16 @@ const Navbar = () => {
                         >
                             About
                         </Link>
-                        <Link
-                            href="/dashboard"
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-                        >
-                            Dashboard
-                        </Link>
+                        {
+                            user && (
+                                <Link
+                                    href="/dashboard"
+                                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                                >
+                                    Dashboard
+                                </Link>
+                            )
+                        }
                     </div>
                     {/* Right Section */}
                     <div className="flex items-center gap-4">

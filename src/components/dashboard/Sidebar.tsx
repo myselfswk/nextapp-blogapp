@@ -75,7 +75,7 @@ function DashboardSidebar({
                     </Button>
                 </Link>
 
-                <Link href={"/dashboard/articles/create"}>
+                <Link href={"/dashboard/articles"}>
                     <Button
                         variant="ghost"
                         className="w-full justify-start"

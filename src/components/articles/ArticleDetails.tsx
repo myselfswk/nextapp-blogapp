@@ -8,6 +8,8 @@ import CommentList from "../comments/CommentList";
 import { prisma } from "@/lib/prisma";
 import CommentForm from "../comments/CommentForm";
 import { auth } from "@clerk/nextjs/server";
+import Navbar from "../home/header/Navbar";
+import { BlogFooter } from "../home/BlogFooter";
 
 type ArticleDetailsProps = {
     article: Prisma.ArticlesGetPayload<{
@@ -46,6 +48,7 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = async ({ article }) => {
     return (
         <div className="min-h-screen bg-background">
             {/* Reuse your existing Navbar */}
+            <Navbar />
 
             <main className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
                 <article className="mx-auto max-w-3xl">
@@ -98,6 +101,9 @@ const ArticleDetails: React.FC<ArticleDetailsProps> = async ({ article }) => {
                     </Card>
                 </article>
             </main>
+
+            {/* Footer */}
+            <BlogFooter />
         </div>
     )
 }

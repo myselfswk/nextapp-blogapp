@@ -4,11 +4,23 @@ import { Clock, FileText, MessageCircle, PlusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import RecentArticles from "./RecentArticles";
 import { prisma } from "@/lib/prisma";
+import { auth } from '@clerk/nextjs/server';
 
 const BlogDashboard = async () => {
+    const { userId, redirectToSignIn } = await auth()
+    if (!userId) return redirectToSignIn();
+    const user = await prisma.user.findUnique({
+        where: {
+            clerkUserId: userId
+        }
+    });
+
     const [articles, totalComments] = await Promise.all([
         // select work same as populate in mongoose
         prisma.articles.findMany({
+            where: {
+                authorId: user?.id, // 👈 only fetch this user’s articles
+            },
             // order by desc get latest articles first
             // this is the same as sort in mongoose
             orderBy: {
@@ -25,7 +37,7 @@ const BlogDashboard = async () => {
                 },
             },
         }),
-        prisma.comment.count(),
+        prisma.comment.count()
     ]);
 
     return (
