@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "vercel-build": "next build --no-lint && prisma generate && prisma migrate deploy"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.14.0",

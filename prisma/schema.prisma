@@ -64,3 +64,16 @@ model Like {
 
   @@unique([userId, articleId]) // Ensures a user can like an article only once
 }
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String
+  githubUrl    String?
+  liveUrl      String?
+  techStack    String
+  projectImage String
+  author       User     @relation(fields: [authorId], references: [id])
+  authorId     Int
+  createdAt    DateTime @default(now())
+}

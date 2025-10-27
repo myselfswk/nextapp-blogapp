@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+// , Workflow
 import { BarChart, FileText, LayoutDashboard, MessageCircle, Settings } from "lucide-react";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
@@ -85,6 +86,16 @@ function DashboardSidebar({
                         Articles
                     </Button>
                 </Link>
+                {/* <Link href={"/dashboard/projects"}>
+                    <Button
+                        variant="ghost"
+                        className="w-full justify-start"
+                        onClick={closeSheet}
+                    >
+                        <Workflow className="mr-2 h-4 w-4" />
+                        Projects - MotionFolio
+                    </Button>
+                </Link> */}
                 <Button
                     variant="ghost"
                     className="w-full justify-start"
