@@ -4,6 +4,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import type { Prisma } from "@prisma/client";
+import Link from "next/link";
 
 type SearchPageProps = {
     articles: Prisma.ArticlesGetPayload<{
@@ -29,38 +30,40 @@ const AllArticlesPage = ({ articles }: SearchPageProps) => {
                     key={article.id}
                     className="group relative overflow-hidden transition-all hover:shadow-lg"
                 >
-                    <div className="p-6">
-                        {/* Image Container */}
-                        <div className="relative mb-4 h-48 w-full overflow-hidden rounded-xl">
-                            <Image
-                                src={article.featuredImage as string}
-                                alt={article.title}
-                                fill
-                                className="object-cover"
-                            />
-                        </div>
-                        {/* Article Content */}
-                        <h3 className="text-xl font-semibold text-foreground">
-                            {article.title}
-                        </h3>
-                        <p className="mt-2 text-muted-foreground">{article.category}</p>
+                    <Link href={`/articles/${article.id}`}>
+                        <div className="p-6">
+                            {/* Image Container */}
+                            <div className="relative mb-4 h-48 w-full overflow-hidden rounded-xl">
+                                <Image
+                                    src={article.featuredImage as string}
+                                    alt={article.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            {/* Article Content */}
+                            <h3 className="text-xl font-semibold text-foreground">
+                                {article.title}
+                            </h3>
+                            <p className="mt-2 text-muted-foreground">{article.category}</p>
 
-                        {/* Author & Metadata */}
-                        <div className="mt-6 flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <Avatar className="h-8 w-8">
-                                    <AvatarImage src={article.author.imageUrl as string} />
-                                    <AvatarFallback>{article.author.name}</AvatarFallback>
-                                </Avatar>
-                                <span className="text-sm text-muted-foreground">
-                                    {article.author.name}
-                                </span>
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                                {article.createdAt.toDateString()}
+                            {/* Author & Metadata */}
+                            <div className="mt-6 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Avatar className="h-8 w-8">
+                                        <AvatarImage src={article.author.imageUrl as string} />
+                                        <AvatarFallback>{article.author.name}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="text-sm text-muted-foreground">
+                                        {article.author.name}
+                                    </span>
+                                </div>
+                                <div className="text-sm text-muted-foreground">
+                                    {article.createdAt.toDateString()}
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </Link>
                 </Card>
             ))}
         </div>

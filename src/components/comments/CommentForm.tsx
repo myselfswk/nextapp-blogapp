@@ -1,25 +1,31 @@
 "use client";
-import React, { useActionState } from 'react'
+import React, { useActionState } from 'react';
+import { useUser } from '@clerk/nextjs';
+
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { createComment } from '@/actions/create-comment';
-
-type CommentFormProps = {
-    articleId: string
-}
+import { CommentFormProps } from '@/types';
 
 const CommentForm: React.FC<CommentFormProps> = ({ articleId }) => {
     const [formState, action, isPending] = useActionState(createComment.bind(null, articleId), {
         errors: {},
     });
 
+    // Get logged In user from clerk functionality
+    const { isLoaded, isSignedIn, user } = useUser();
+    if (!isLoaded || !isSignedIn) {
+        return <div>Loading user data...</div>;
+    }
+    const firstLetter = user && user?.firstName?.slice(0, 1).toUpperCase();
+
     return (
         <form className="mb-8" action={action}>
             <div className="flex gap-4">
                 <Avatar className="h-10 w-10">
-                    <AvatarImage src="/current-user-avatar.jpg" />
-                    <AvatarFallback>Y</AvatarFallback>
+                    <AvatarImage src={user?.imageUrl} />
+                    <AvatarFallback>{firstLetter}</AvatarFallback>
                 </Avatar>
                 <div className="flex-1">
                     <Input placeholder="Add a comment..." name="body" className="py-6 text-base" />

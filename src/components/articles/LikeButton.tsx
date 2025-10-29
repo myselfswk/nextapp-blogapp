@@ -2,14 +2,8 @@
 import React, { useOptimistic, useTransition } from "react";
 import { Bookmark, Share2, ThumbsUp } from "lucide-react";
 import { Button } from "../ui/button";
-import { Like } from "@prisma/client";
 import { toggleLike } from "@/actions/toggle-like";
-
-type LikeButtonProps = {
-    articleId: string,
-    likes: Like[],
-    isLiked: boolean
-}
+import { LikeButtonProps } from "@/types";
 
 const LikeButton: React.FC<LikeButtonProps> = ({ articleId, isLiked, likes }) => {
     const [optimisticLikes, setOptimisticLikes] = useOptimistic(likes.length);
@@ -32,14 +26,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({ articleId, isLiked, likes }) =>
                     className="gap-2"
                     disabled={isPending}
                 >
-                    <ThumbsUp className="h-5 w-5" />
+                    <ThumbsUp className="h-5 w-5" color={isLiked ? "red" : "white"} fill={isLiked ? "red" : ""} />
                     {optimisticLikes}
                 </Button>
             </form>
-            <Button title="Coming Soon!" variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2" disabled>
                 <Bookmark className="h-5 w-5" /> Save
             </Button>
-            <Button title="Coming Soon!" variant="ghost" className="gap-2">
+            <Button variant="ghost" className="gap-2" disabled>
                 <Share2 className="h-5 w-5" /> Share
             </Button>
         </div>

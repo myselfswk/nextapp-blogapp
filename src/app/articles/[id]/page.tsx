@@ -1,13 +1,11 @@
 import ArticleDetails from "@/components/articles/ArticleDetails";
 import { prisma } from "@/lib/prisma";
-import React from "react";
+import { notFound } from "next/navigation";
 
-type ArticleDetailProps = {
+export default async function ArticleDetail({ params }: {
     params: { id: string };
-};
-
-const ArticleDetail = async ({ params }: ArticleDetailProps) => {
-    const { id } = params;
+}) {
+    const { id } = await Promise.resolve(params); // ensures type safety
 
     const article = await prisma.articles.findUnique({
         where: { id },
@@ -22,11 +20,13 @@ const ArticleDetail = async ({ params }: ArticleDetailProps) => {
         },
     });
 
-    if (!article) {
-        return <div>Article not found</div>;
-    }
+    if (!article) return notFound();
 
     return <ArticleDetails article={article} />;
-};
+}
 
-export default ArticleDetail;
+// Optional static generation helper:
+export async function generateStaticParams() {
+    const articles = await prisma.articles.findMany({ select: { id: true } });
+    return articles.map((a) => ({ id: a.id }));
+}

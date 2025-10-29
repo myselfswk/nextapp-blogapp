@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Button } from "../../../components/ui/button";
-import { Clock, FileText, MessageCircle, PlusCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../../components/ui/card";
+import { PlusCircle } from "lucide-react";
 import RecentArticles from "../../../components/dashboard/RecentArticles";
 import { prisma } from "@/lib/prisma";
 import { auth } from '@clerk/nextjs/server';

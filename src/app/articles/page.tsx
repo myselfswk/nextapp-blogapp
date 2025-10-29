@@ -7,16 +7,15 @@ import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchArticleByQuery } from "@/lib/query/fetch-articles";
 import Navbar from "@/components/home/header/Navbar";
-
-type SearchPageProps = {
-    searchParams: { search?: string; page?: string };
-};
-
-const ITEMS_PER_PAGE = 3; // Number of items per page
+import { SearchPageProps } from "@/types";
+import { BlogFooter } from "@/components/home/BlogFooter";
 
 const Articles: React.FC<SearchPageProps> = async ({ searchParams }) => {
-    const searchText = searchParams.search || "";
-    const currentPage = Number(searchParams.page) || 1;
+    const ITEMS_PER_PAGE = 3; // Number of items per page
+    // const params = await searchParams;
+    const params = searchParams;
+    const searchText = params.search || "";
+    const currentPage = Number(params.page) || 1;
     const skip = (currentPage - 1) * ITEMS_PER_PAGE;
     const take = ITEMS_PER_PAGE;
 
@@ -45,7 +44,7 @@ const Articles: React.FC<SearchPageProps> = async ({ searchParams }) => {
 
                 {/* <AllArticlesPageSkeleton/> */}
                 {/* Pagination */}
-                <div className="mt-12 flex justify-center gap-2">
+                <div className="my-12 flex justify-center gap-2">
                     {/* Prev Button */}
                     <Link
                         href={`?search=${searchText}&page=${currentPage - 1}`}
@@ -90,6 +89,8 @@ const Articles: React.FC<SearchPageProps> = async ({ searchParams }) => {
                         </Button>
                     </Link>
                 </div>
+
+                <BlogFooter />
             </main>
         </div>
     )
